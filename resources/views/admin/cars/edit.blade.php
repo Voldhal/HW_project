@@ -12,7 +12,9 @@
                 <label for="reg_number">{{ __('translation.table_headers.reg_number') }}</label>
                 <input type="text" class="form-control" id="reg_number" name="reg_number" value="{{ $car->reg_number }}" required>
             </div>
-
+            @error('reg_number')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-group">
                 <label for="image">Car Image</label>
                 <input type="file" class="form-control" id="image" name="image">

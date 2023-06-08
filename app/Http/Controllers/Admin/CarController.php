@@ -38,27 +38,31 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'reg_number' => 'required|regex:/^[A-Z]{3}\s\d{3}$/',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'brand' => 'required',
+            'model' => 'required',
+            'owner_id' => 'required',
         ]);
 
-        $car = new Car([
-            'reg_number' => 'required|regex:/^[A-Z]{3}\s\d{3}$/',
-            'brand' => $request->input('brand'),
-            'model' => $request->input('model'),
-            'owner_id' => $request->input('owner_id'),
-        ]);
+        $car = new Car();
+        $car->reg_number = $request->input('reg_number');
+        $car->brand = $request->input('brand');
+        $car->model = $request->input('model');
+        $car->owner_id = $request->input('owner_id');
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('cars', $image, $imageName);
-            $car->image = $imageName;
+            $imagePath = $request->file('image')->store('cars', 'public');
+            $car->image = basename($imagePath);
         }
 
         $car->save();
 
         return redirect()->route('admin.cars.index')->with('success', 'Car created successfully.');
     }
+
+
+
 
     /**
      * Display the specified resource.

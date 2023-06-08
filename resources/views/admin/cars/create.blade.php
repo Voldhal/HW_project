@@ -3,17 +3,22 @@
 @section('content')
     <h1>Add Car</h1>
 
-    <form action="{{ route('admin.cars.store') }}" method="POST">
+    <form action="{{ route('admin.cars.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="reg_number">Registration Number</label>
             <input type="text" class="form-control" id="reg_number" name="reg_number" required>
         </div>
-
+        @error('reg_number')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <div class="form-group">
-            <label for="image">Car image</label>
+            <label for="image">Car Image</label>
             <input type="file" class="form-control" id="image" name="image">
         </div>
+        @error('image')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         <div class="form-group">
             <label for="brand">Brand</label>
