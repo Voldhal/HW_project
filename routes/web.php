@@ -32,7 +32,7 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('admin/owners', [OwnerController::class, 'index'])->name('admin.owners.index');
+
 
     Route::get('admin/cars/create/{owner_id}', [CarController::class, 'create'])->name('admin.cars.create');
     Route::resource('admin/cars', CarController::class)->except(['create']);
@@ -41,13 +41,17 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/cars', [CarController::class, 'index'])->name('admin.cars.index');
     Route::put('admin/cars/{car}', [CarController::class, 'update'])->name('admin.cars.update');
     Route::post('admin/cars', [CarController::class, 'store'])->name('admin.cars.store');
+    Route::resource('admin/owners', OwnerController::class)->except(['create']);
+    Route::get('admin/owners', [OwnerController::class, 'index'])->name('admin.owners.index');
+    Route::get('admin/owners/{owner}/edit', [OwnerController::class, 'edit'])->name('admin.owners.edit');
+    Route::put('admin/owners/{owner}', [OwnerController::class, 'update'])->name('admin.owners.update');
+    Route::delete('admin/owners/{owner}', [OwnerController::class, 'destroy'])->name('admin.owners.destroy');
 
-    
 });
 
 Route::get('admin/language/{locale}', function ($locale) {
     app()->setLocale($locale);
     session()->put('locale', $locale);
-    
+
     return redirect()->back();
-});
+})->name('admin.language');

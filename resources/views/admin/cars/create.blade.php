@@ -11,6 +11,11 @@
         </div>
 
         <div class="form-group">
+            <label for="image">Car image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+
+        <div class="form-group">
             <label for="brand">Brand</label>
             <input type="text" class="form-control" id="brand" name="brand" required>
         </div>

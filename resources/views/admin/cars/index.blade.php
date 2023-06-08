@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-<li class="nav-item">
+<h3 class="text-primary">
     <a class="nav-link" href="{{ route('admin.owners.index') }}">{{ __('translation.buttons.owners') }}</a>
-</li>
+</h3>
 <h1>{{ __('translation.cars_list') }}</h1>
 <table class="table">
     <thead>
@@ -25,7 +25,7 @@
                 <td>{{ $car->model }}</td>
                 <td>{{ $car->owner->name }} {{ $car->owner->surname }}</td>
                 <td>
-                    <a href="{{ route('admin.cars.edit', $car->id) }}" class="btn btn-success">{{ __('translation.buttons.edit') }}</a>
+                    <a href="{{ route('admin.cars.edit', $car->id) }}" class="btn btn-sm btn-primary">{{ __('translation.buttons.edit') }}</a>
                     <form action="{{ route('admin.cars.destroy', $car->id) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')

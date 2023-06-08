@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Owner;
 use Illuminate\Http\Request;
-
 class OwnerController extends Controller
 {
     /**
@@ -45,24 +44,28 @@ class OwnerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Owner $owner)
     {
-        //
+        return view('admin.owners.edit', compact('owner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Owner $owner)
     {
-        //
+        $owner->update($request->all());
+
+        return redirect()->route('admin.owners.index')->with('success', 'Owner updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Owner $owner)
     {
-        //
+        $owner->delete();
+
+        return redirect()->route('admin.owners.index')->with('success', 'Owner deleted successfully.');
     }
 }

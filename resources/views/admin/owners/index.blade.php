@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-<li class="nav-item">
+<h3 class="text-primary">
     <a class="nav-link" href="{{ route('admin.cars.index') }}">{{ __('translation.buttons.cars') }}</a>
-</li>
+</h3>
     <h1>{{ __('translation.owners_list') }}</h1>
 
     <table class="table">
@@ -28,7 +28,14 @@
                         @endforeach
                     </td>
                     <td>
-                    <a href="{{ route('admin.cars.create', ['owner_id' => $owner->id]) }}" class="btn btn-sm btn-primary">{{ __('translation.buttons.create_car') }}</a>
+                        <a href="{{ route('admin.cars.create', ['owner_id' => $owner->id]) }}" class="btn btn-sm btn-primary">{{ __('translation.buttons.create_car') }}</a>
+                        <a href="{{ route('admin.owners.edit', $owner) }}" class="btn btn-sm btn-primary">{{ __('translation.buttons.edit') }}</a>
+                        <form action="{{ route('admin.owners.destroy', $owner) }}" method="POST" style="display: inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">{{ __('translation.buttons.delete') }}</button>
+                        </form>
+                    </td>
                     </td>
                 </tr>
             @endforeach
